@@ -1,0 +1,66 @@
+# ==============================================
+# Script Name: joinitem (a.k.a. Server Menu Item Script)
+# Created by: akiondev
+# Support: https://discord.gg/v4umqdd7Aj
+# Tested on: Skript 2.12.0 (latest at time of writing)
+# Description: This script gives players an item upon joining which acts as a trigger to run
+#              the "/menu" command. It is designed to function as a server menu, but can be
+#              freely adapted to suit other needs or commands.
+#              Requires a separate GUI plugin to open a GUI via the command.
+# ==============================================
+
+# Give the player the menu item when they join
+on join:
+    giveMenuItem(player)
+
+# Give the menu item again on respawn
+on respawn:
+    wait 2 ticks
+    giveMenuItem(event-player)
+
+# Give the menu item again when changing worlds (e.g., Multiverse)
+on world change:
+    giveMenuItem(event-player)
+
+# Function to give the menu item and place it in slot 8
+function giveMenuItem(p: player):
+    set {_item} to clock
+    set name of {_item} to "§6Server Menu"
+    set {_lore::1} to "§7Click to open the menu"
+    set lore of {_item} to {_lore::*}
+    set slot 8 of {_p}'s inventory to {_item}
+
+# Prevent the item from being dropped on death
+on death:
+    loop drops:
+        if name of loop-item is "§6Server Menu":
+            remove loop-item from drops
+
+# Prevent the item from being manually dropped
+on drop:
+    if name of event-item is "§6Server Menu":
+        cancel event
+
+# Prevent moving the item inside the inventory
+on inventory click:
+    if name of event-item is "§6Server Menu":
+        cancel event
+
+# Run /menu when right-clicking with the item in hand
+on right click:
+    if name of player's tool is "§6Server Menu":
+        execute player command "menu"
+
+# Run /menu when left-clicking with the item in hand
+on left click:
+    if name of player's tool is "§6Server Menu":
+        execute player command "menu"
+
+# Check every 5 seconds that the player has the correct item in slot 8, otherwise re-give it
+every 5 seconds:
+    loop all players:
+        set {_item} to slot 8 of loop-player
+        if {_item} is not clock:
+            giveMenuItem(loop-player)
+        else if name of {_item} is not "§6Server Menu":
+            giveMenuItem(loop-player)
