@@ -1,4 +1,5 @@
-# JoinItem Skript [![Discord](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/v4umqdd7Aj)
+# JoinItem Skript 
+[![Discord](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/v4umqdd7Aj)
 
 A simple and flexible Skript for Minecraft servers that gives players a custom item when they join. The item executes the `/menu` command on click and is intended to act as a server menu shortcut. This script is ideal for use with GUI plugins like ChestCommands or DeluxeMenus.
 
